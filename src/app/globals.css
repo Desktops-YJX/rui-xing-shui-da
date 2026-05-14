@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+@plugin "tailwindcss-animate";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-sans: Inter, Arial, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  
+  /* 品牌色系 */
+  --color-brand-red: #8B1E2D;
+  --color-brand-dark: #1F2933;
+  --color-brand-gray: #5F6B7A;
+  --color-brand-beige: #F7F4EF;
+  --color-brand-white: #FFFFFF;
+  --color-brand-gold: #B08A45;
+  --color-brand-border: #E5E0D8;
+
+  /* Shadcn UI 基础变量映射 */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* 圆角设置 (16px) */
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 4px);
+  --radius-sm: calc(var(--radius) - 8px);
+}
+
+:root {
+  --background: #FFFFFF;
+  --foreground: #1F2933;
+  
+  --card: #FFFFFF;
+  --card-foreground: #1F2933;
+  
+  --popover: #FFFFFF;
+  --popover-foreground: #1F2933;
+  
+  --primary: #8B1E2D;
+  --primary-foreground: #FFFFFF;
+  
+  --secondary: #F7F4EF;
+  --secondary-foreground: #1F2933;
+  
+  --muted: #F7F4EF;
+  --muted-foreground: #5F6B7A;
+  
+  --accent: #B08A45;
+  --accent-foreground: #FFFFFF;
+  
+  --destructive: #ef4444;
+  --destructive-foreground: #FFFFFF;
+  
+  --border: #E5E0D8;
+  --input: #E5E0D8;
+  --ring: #8B1E2D;
+  
+  --radius: 16px;
+}
+
+/* 黑暗模式 (由于是企业官网，可暂不强求黑暗模式效果，保持一致性即可，这里仅保留骨架) */
+.dark {
+  --background: #1F2933;
+  --foreground: #F7F4EF;
+  --card: #1a222b;
+  --card-foreground: #F7F4EF;
+  --popover: #1a222b;
+  --popover-foreground: #F7F4EF;
+  --primary: #8B1E2D;
+  --primary-foreground: #FFFFFF;
+  --secondary: #2b3642;
+  --secondary-foreground: #F7F4EF;
+  --muted: #2b3642;
+  --muted-foreground: #a0abb8;
+  --accent: #B08A45;
+  --accent-foreground: #FFFFFF;
+  --destructive: #7f1d1d;
+  --destructive-foreground: #FFFFFF;
+  --border: #2b3642;
+  --input: #2b3642;
+  --ring: #8B1E2D;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+}
