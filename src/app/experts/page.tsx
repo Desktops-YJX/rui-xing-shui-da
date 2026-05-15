@@ -7,8 +7,8 @@ import { ContactButton } from "@/components/ui/contact-button";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { experts } from "@/data/experts";
-import { CheckCircle2, Award, Lightbulb, Scale, Target } from "lucide-react";
+import { coreExpert, advisors, teamMembers } from "@/data/experts";
+import { CheckCircle2, Award, Lightbulb, Scale, Target, Users, BookOpen } from "lucide-react";
 import { ImageLightbox } from "@/components/ui/image-lightbox";
 
 export const metadata: Metadata = {
@@ -22,7 +22,7 @@ export default function ExpertsPage() {
     { name: "专家团队", url: "https://www.ruixingshuida.com/experts" },
   ];
 
-  const expert = experts[0]; // 袁道平
+  const expert = coreExpert; // 袁道平
   const specializations = expert.specialties;
 
   const certificates = [
@@ -84,12 +84,12 @@ export default function ExpertsPage() {
                 
                 <div>
                   <h3 className="text-xl font-bold text-brand-dark mb-4 flex items-center">
-                    <Target className="w-5 h-5 text-brand-red mr-2" /> 专业方向
+                    <Award className="w-5 h-5 text-brand-red mr-2" /> 任职与兼职
                   </h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-6">
+                  <div className="grid grid-cols-1 gap-y-3">
                     {specializations.map((spec, idx) => (
                       <div key={idx} className="flex items-center text-brand-gray">
-                        <CheckCircle2 className="w-4 h-4 text-brand-red mr-2 shrink-0" />
+                        <div className="w-2 h-2 rounded-full bg-brand-gold mr-3 shrink-0" />
                         <span className="font-medium">{spec}</span>
                       </div>
                     ))}
@@ -102,23 +102,124 @@ export default function ExpertsPage() {
         </Container>
       </section>
 
-      {/* 3. 专业能力说明 */}
+      {/* 3. 团队矩阵与优势 */}
       <section className="py-24 bg-brand-beige/50">
         <Container>
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="w-16 h-16 mx-auto rounded-full bg-brand-gold/20 flex items-center justify-center mb-6">
-              <Scale className="w-8 h-8 text-brand-gold" />
+          <div className="max-w-6xl mx-auto">
+            <SectionHeader 
+              title="复合型人才矩阵与权威资源协同" 
+              subtitle="团队成员由律师、注册会计师、税务师、评估师等组成，深耕涉税服务领域多年，并联合北京盈科（成都）律师事务所、川渝高校专家组建服务联盟，保障服务品质行业领先。" 
+            />
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+              {/* 优势1 */}
+              <div className="bg-white p-8 rounded-2xl shadow-sm border border-brand-border/50 text-center">
+                <div className="w-16 h-16 mx-auto rounded-full bg-brand-red/10 flex items-center justify-center mb-6">
+                  <Scale className="w-8 h-8 text-brand-red" />
+                </div>
+                <h3 className="text-xl font-bold text-brand-dark mb-4">破解单一专业视角局限</h3>
+                <p className="text-brand-gray leading-relaxed">
+                  核心团队兼具财税政策深度解读、法律风险精准把控、资产价值科学评估等多维能力，为企业提供从合规诊断到风险化解、价值提升的全链条专业支持。
+                </p>
+              </div>
+
+              {/* 优势2 */}
+              <div className="bg-white p-8 rounded-2xl shadow-sm border border-brand-border/50 text-center">
+                <div className="w-16 h-16 mx-auto rounded-full bg-brand-gold/10 flex items-center justify-center mb-6">
+                  <Target className="w-8 h-8 text-brand-gold" />
+                </div>
+                <h3 className="text-xl font-bold text-brand-dark mb-4">高合规性一体化解决方案</h3>
+                <p className="text-brand-gray leading-relaxed">
+                  依托项目统一管理与标准化作业，精准把控全流程风险，高效对接税务机关，助力企业财税安全与价值提升。
+                </p>
+              </div>
+
+              {/* 优势3 */}
+              <div className="bg-white p-8 rounded-2xl shadow-sm border border-brand-border/50 text-center">
+                <div className="w-16 h-16 mx-auto rounded-full bg-blue-500/10 flex items-center justify-center mb-6">
+                  <BookOpen className="w-8 h-8 text-blue-500" />
+                </div>
+                <h3 className="text-xl font-bold text-brand-dark mb-4">丰富的实战经验</h3>
+                <p className="text-brand-gray leading-relaxed">
+                  核心成员累计处理复杂涉税案件、合规项目百余项，经验覆盖房地产制造业、金融商贸等多个行业。
+                </p>
+              </div>
             </div>
-            <h2 className="text-3xl font-bold text-brand-dark mb-8">复合视角处理复杂问题</h2>
-            <p className="text-xl text-brand-gray leading-relaxed">
-              复杂涉税事项往往同时涉及合同效力、财务真实性、交易实质、发票合规、税法适用和程序规则。瑞兴税达专家团队坚持以事实和证据为基础，通过法财税一体化方式，为客户提供更完整的风险判断和处理路径。
-            </p>
+
+            {/* 团队成员列表 */}
+            <div className="mt-20">
+              <h3 className="text-2xl font-bold text-brand-dark text-center mb-10">核心团队成员</h3>
+              <div className="flex flex-wrap justify-center gap-4">
+                {teamMembers.map((member, idx) => (
+                  <div key={idx} className="bg-white px-6 py-4 rounded-xl shadow-sm border border-brand-border/50 flex flex-col items-center min-w-[160px]">
+                    <span className="text-lg font-bold text-brand-dark mb-2">{member.name}</span>
+                    <div className="flex flex-wrap justify-center gap-1.5">
+                      {member.titles.map((title, tIdx) => (
+                        <span key={tIdx} className="text-xs px-2 py-1 bg-brand-beige text-brand-gray rounded-md">
+                          {title}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </Container>
       </section>
 
-      {/* 4. 资质荣誉模块 */}
+      {/* 4. 专家顾问 */}
       <section className="py-24 bg-white">
+        <Container>
+          <SectionHeader 
+            title="特聘专家顾问" 
+            subtitle="联合川渝高校知名学者、专家教授，提供深厚的理论支持与权威的实务指导。" 
+          />
+          
+          <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 mt-16">
+            {advisors.map((advisor, idx) => (
+              <div key={idx} className="bg-brand-beige/20 rounded-2xl border border-brand-border/50 overflow-hidden flex flex-col h-full">
+                <div className="p-8 border-b border-brand-border/50 bg-white">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="w-16 h-16 rounded-full bg-brand-dark flex items-center justify-center shrink-0">
+                      <span className="text-2xl font-bold text-brand-gold">{advisor.name[0]}</span>
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-bold text-brand-dark mb-1">{advisor.name}</h3>
+                      <div className="flex flex-wrap gap-2">
+                        {advisor.titles.map((title, tIdx) => (
+                          <span key={tIdx} className="text-xs font-medium text-brand-red bg-brand-red/10 px-2 py-0.5 rounded">
+                            {title}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <p className="text-brand-gray leading-relaxed text-sm">
+                    {advisor.description}
+                  </p>
+                </div>
+                
+                {advisor.stats && (
+                  <div className="bg-brand-dark p-6 mt-auto">
+                    <div className="grid grid-cols-3 gap-4 divide-x divide-white/10">
+                      {advisor.stats.map((stat, sIdx) => (
+                        <div key={sIdx} className="text-center px-2">
+                          <div className="text-brand-gold font-bold text-lg mb-1">{stat.value}</div>
+                          <div className="text-white/60 text-xs">{stat.label}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* 5. 资质荣誉模块 */}
+      <section className="py-24 bg-brand-beige/50">
         <Container>
           <SectionHeader 
             title="专业资质与行业参与" 

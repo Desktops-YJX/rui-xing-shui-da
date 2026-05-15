@@ -6,6 +6,7 @@ import { HomeScenarios } from "@/components/sections/HomeScenarios";
 import { HomeExperts } from "@/components/sections/HomeExperts";
 import { HomeCases } from "@/components/sections/HomeCases";
 import { HomeFaq } from "@/components/sections/HomeFaq";
+import { HomePartners } from "@/components/sections/HomePartners";
 import { HomeCta } from "@/components/sections/HomeCta";
 
 export default function Home() {
@@ -18,6 +19,7 @@ export default function Home() {
       <HomeScenarios />
       <HomeExperts />
       <HomeCases />
+      <HomePartners />
       <HomeFaq />
       <HomeCta />
     </main>

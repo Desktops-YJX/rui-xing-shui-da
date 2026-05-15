@@ -41,13 +41,17 @@ export function HomeHero() {
           </p>
 
           {/* Actions */}
-          <div className="flex flex-col sm:flex-row items-center gap-4">
-            <Link href="/contact" className="w-full sm:w-auto">
-              <ContactButton className="w-full" />
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Link href="/services">
+              <Button size="lg" className="w-full sm:w-auto bg-brand-red hover:bg-brand-red/90 text-white rounded-full px-8 shadow-lg shadow-brand-red/20 transition-all hover:-translate-y-1">
+                了解我们的服务
+              </Button>
             </Link>
-            <Button asChild variant="outline" size="lg" className="w-full sm:w-auto px-8 py-6 rounded-[16px] text-base border-brand-border bg-white hover:bg-gray-50">
-              <Link href="/services">查看服务中心</Link>
-            </Button>
+            <Link href="/contact">
+              <Button size="lg" variant="outline" className="w-full sm:w-auto border-brand-red/30 text-brand-red hover:bg-brand-red/5 rounded-full px-8 transition-all">
+                预约专家咨询
+              </Button>
+            </Link>
           </div>
           
           {/* Trust indicator */}

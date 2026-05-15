@@ -2,7 +2,9 @@ import { JsonLd } from "./JsonLd";
 import { faqs } from "@/data/faqs";
 
 export function FaqJsonLd() {
-  const mainEntity = faqs.map((faq) => ({
+  const allFaqs = faqs.flatMap(category => category.items);
+  
+  const mainEntity = allFaqs.map((faq) => ({
     "@type": "Question",
     "name": faq.question,
     "acceptedAnswer": {

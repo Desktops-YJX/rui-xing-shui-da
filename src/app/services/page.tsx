@@ -311,16 +311,22 @@ export default function ServicesPage() {
         <Container>
           <SectionHeader title="常见问题" />
           <div className="max-w-3xl mx-auto mt-8">
-            <Accordion type="single" collapsible className="w-full">
-              {faqs.map((faq) => (
-                <AccordionItem key={faq.id} value={faq.id}>
-                  <AccordionTrigger className="text-base font-semibold hover:text-brand-red text-left">
-                    {faq.question}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-brand-gray text-base leading-relaxed pb-6">
-                    {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
+            <Accordion type="single" collapsible className="w-full space-y-4">
+              {faqs.slice(0, 5).map((category, catIdx) => (
+                category.items.slice(0, 1).map((faq, idx) => (
+                  <AccordionItem 
+                    key={`${catIdx}-${idx}`} 
+                    value={`${catIdx}-${idx}`}
+                    className="bg-white border border-brand-border rounded-xl px-6 data-[state=open]:border-brand-red/30 data-[state=open]:shadow-sm transition-all"
+                  >
+                    <AccordionTrigger className="text-left text-lg font-medium text-brand-dark hover:text-brand-red py-6 hover:no-underline">
+                      {faq.question}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-brand-gray text-base leading-relaxed pb-6 pt-0">
+                      {faq.answer}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))
               ))}
             </Accordion>
           </div>

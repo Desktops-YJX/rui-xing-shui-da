@@ -20,20 +20,7 @@ export default function FaqPage() {
     { name: "常见问题", url: "https://www.ruixingshuida.com/faq" },
   ];
 
-  // 按分类对 FAQ 进行分组
-  const categories = [
-    "机构定位与服务模式",
-    "税务合规与风险化解",
-    "税务稽查与争议解决",
-    "并购重组与投融资",
-    "常年顾问与企业治理",
-    "高净值人士与家族税务规划"
-  ];
-
-  const groupedFaqs = categories.map(category => ({
-    category,
-    items: faqs.filter(faq => faq.category === category)
-  })).filter(group => group.items.length > 0);
+  const groupedFaqs = faqs;
 
   return (
     <main className="flex flex-col w-full">
@@ -50,37 +37,31 @@ export default function FaqPage() {
       <section className="py-24 bg-brand-beige/20">
         <Container>
           <div className="max-w-4xl mx-auto space-y-16">
-            {groupedFaqs.map((group, groupIdx) => (
-              <div key={groupIdx} className="scroll-mt-24">
-                <h2 className="text-2xl font-bold text-brand-dark mb-6 flex items-center border-b border-brand-border pb-4">
-                  <HelpCircle className="w-6 h-6 text-brand-red mr-3" />
-                  {group.category}
-                </h2>
+            {groupedFaqs.map((category, catIdx) => (
+              <div key={catIdx} id={category.category} className="scroll-mt-32">
+                <h3 className="text-2xl font-bold text-brand-dark mb-6 flex items-center">
+                  <span className="w-8 h-8 rounded-full bg-brand-gold/20 text-brand-gold flex items-center justify-center text-sm mr-3">
+                    {catIdx + 1}
+                  </span>
+                  {category.category}
+                </h3>
                 
-                <div className="bg-white rounded-2xl shadow-sm border border-brand-border p-2 md:p-6">
-                  <Accordion type="multiple" className="w-full" defaultValue={group.items.map(item => item.id)}>
-                    {group.items.map((faq, idx) => (
-                      <AccordionItem 
-                        key={faq.id} 
-                        value={faq.id} 
-                        className={idx === group.items.length - 1 ? "border-0" : ""}
-                      >
-                        <AccordionTrigger className="text-left text-base md:text-lg font-semibold hover:text-brand-red py-4 px-2">
-                          <span className="flex gap-4">
-                            <span className="text-brand-gold font-bold shrink-0">Q.</span>
-                            {faq.question}
-                          </span>
-                        </AccordionTrigger>
-                        <AccordionContent className="text-brand-gray text-base leading-relaxed px-2 pb-6">
-                          <div className="flex gap-4">
-                            <span className="text-brand-dark/30 font-bold shrink-0">A.</span>
-                            <div>{faq.answer}</div>
-                          </div>
-                        </AccordionContent>
-                      </AccordionItem>
-                    ))}
-                  </Accordion>
-                </div>
+                <Accordion type="single" collapsible className="w-full space-y-4">
+                  {category.items.map((faq, idx) => (
+                    <AccordionItem 
+                      key={idx} 
+                      value={`${catIdx}-${idx}`}
+                      className="bg-white border border-brand-border rounded-xl px-6 data-[state=open]:border-brand-red/30 data-[state=open]:shadow-sm transition-all"
+                    >
+                      <AccordionTrigger className="text-left text-lg font-medium text-brand-dark hover:text-brand-red py-6 hover:no-underline">
+                        {faq.question}
+                      </AccordionTrigger>
+                      <AccordionContent className="text-brand-gray text-base leading-relaxed pb-6 pt-0">
+                        {faq.answer}
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
               </div>
             ))}
           </div>

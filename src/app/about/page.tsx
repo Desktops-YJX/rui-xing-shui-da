@@ -11,8 +11,8 @@ import { siteData } from "@/data/site";
 import { ImageLightbox } from "@/components/ui/image-lightbox";
 
 export const metadata: Metadata = {
-  title: "关于瑞兴税达｜四川瑞兴税达税务师事务所",
-  description: "了解四川瑞兴税达税务师事务所有限公司。瑞兴税达聚焦法财税一体化服务，为企业提供税务合规、税务稽查应对、税务争议解决、企业重组与常年法财税顾问服务。",
+  title: "关于我们｜川渝法财税一体化服务集团",
+  description: "了解川渝法财税一体化服务集团。整合重庆诚名税务师事务所(5A)、四川瑞兴税达、四川新禾嘉、重庆中特，提供税务、审计、评估、法律全链条服务。",
 };
 
 export default function AboutPage() {
@@ -27,8 +27,8 @@ export default function AboutPage() {
 
       {/* 1. 页面 Hero */}
       <PageHero 
-        title="关于瑞兴税达" 
-        description="瑞兴税达是一家聚焦法财税一体化服务的专业涉税服务机构，致力于为企业和企业家提供从风险识别、方案设计到沟通应对的一体化专业支持。" 
+        title="关于我们" 
+        description="川渝法财税一体化服务集团，整合重庆诚名税务师事务所（AAAAA级）、四川瑞兴税达税务师事务所、四川新禾嘉会计师事务所、重庆中特会计师事务所四家机构，致力于为企业提供从风险识别、方案设计到沟通应对的全链条专业支持。" 
       />
 
       {/* 2. 公司介绍 */}
@@ -36,10 +36,10 @@ export default function AboutPage() {
         <Container>
           <div className="max-w-4xl mx-auto space-y-6 text-lg leading-relaxed text-brand-dark">
             <p>
-              四川瑞兴税达税务师事务所有限公司是一家聚焦法财税一体化服务的专业涉税服务机构。公司坚持“专业为本、法税融合、价值创造”的服务理念，整合税务、财务、法律等复合专业能力，为企业经营、投融资、重组并购、税务稽查、税务争议和高净值人士财富安排等场景提供系统化解决方案。
+              {siteData.about.description.split('\n\n')[0]}
             </p>
             <p>
-              瑞兴税达关注的不只是单一税务问题，而是企业在合同、账务、发票、资金、股权、交易结构等方面交织形成的综合风险。我们以事实为基础、以证据为支撑、以税法和会计逻辑为依据，帮助客户在合法合规前提下实现风险可控、决策清晰、经营稳健。
+              {siteData.about.description.split('\n\n')[1]}
             </p>
           </div>
         </Container>

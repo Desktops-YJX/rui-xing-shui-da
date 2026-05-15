@@ -3,11 +3,10 @@ import Link from "next/link";
 import { Container } from "@/components/layout/Container";
 import { PageHero } from "@/components/ui/page-hero";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { cases } from "@/data/cases";
-import { ArrowRight, Briefcase } from "lucide-react";
+import { Briefcase } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "案例中心｜瑞兴税达法财税服务案例",
@@ -58,17 +57,9 @@ export default function CasesPage() {
                   </div>
                   <div>
                     <h5 className="text-sm font-semibold text-brand-dark mb-1">服务工作摘要</h5>
-                    <p className="text-sm text-brand-gray line-clamp-3">{c.work}</p>
+                    <p className="text-sm text-brand-gray">{c.work}</p>
                   </div>
                 </CardContent>
-                
-                <CardFooter className="pt-4 border-t border-brand-border/50">
-                  <Button asChild variant="ghost" className="w-full text-brand-red hover:text-white hover:bg-brand-red">
-                    <Link href={`/cases/${c.slug}`} className="flex items-center justify-center">
-                      查看案例详情 <ArrowRight className="ml-2 w-4 h-4" />
-                    </Link>
-                  </Button>
-                </CardFooter>
               </Card>
             ))}
           </div>
