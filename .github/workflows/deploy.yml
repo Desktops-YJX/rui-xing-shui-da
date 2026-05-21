@@ -31,14 +31,37 @@ jobs:
           target: ${{ secrets.DEPLOY_PATH }}
           strip_components: 1
 
-      - name: Restart PM2 on Windows Server
+      - name: Initialize Server and Restart App
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SERVER_USER }}
           password: ${{ secrets.SERVER_PASSWORD }}
           port: ${{ secrets.SERVER_PORT }}
-          # 在 Windows OpenSSH 中，默认 shell 可能是 cmd 或 powershell
+          # 在 Windows OpenSSH 中执行环境检查、依赖安装和应用启动
           script: |
+            # 1. 检查并安装 Node.js (如果没有安装)
+            if (!(Get-Command node -ErrorAction SilentlyContinue)) {
+              echo "Node.js not found. Downloading and installing Node.js..."
+              # 使用 PowerShell 下载便携版 Node.js
+              Invoke-WebRequest -Uri "https://nodejs.org/dist/v20.14.0/node-v20.14.0-win-x64.zip" -OutFile "C:\node.zip"
+              Expand-Archive -Path "C:\node.zip" -DestinationPath "C:\nodejs" -Force
+              # 将 Node.js 添加到环境变量 (仅当前会话)
+              $env:Path += ";C:\nodejs\node-v20.14.0-win-x64"
+              # 将 Node.js 添加到系统环境变量 (永久生效)
+              $oldPath = [Environment]::GetEnvironmentVariable("Path", "Machine")
+              if ($oldPath -notmatch "C:\\nodejs\\node-v20.14.0-win-x64") {
+                [Environment]::SetEnvironmentVariable("Path", $oldPath + ";C:\nodejs\node-v20.14.0-win-x64", "Machine")
+              }
+              echo "Node.js installed successfully."
+            }
+
+            # 2. 检查并安装 PM2 (如果不存在)
+            if (!(Get-Command pm2 -ErrorAction SilentlyContinue)) {
+              echo "PM2 not found. Installing PM2 globally..."
+              npm install -g pm2
+            }
+            
+            # 3. 启动或重启 Next.js 应用
             cd "${{ secrets.DEPLOY_PATH }}"
             pm2 restart rui_xing || pm2 start server.js --name "rui_xing"
