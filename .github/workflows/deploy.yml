@@ -1,0 +1,44 @@
+name: Deploy to Windows Server
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: '选择部署环境'
+        required: true
+        default: 'production'
+
+jobs:
+  deploy:
+    name: Deploy to Server
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Build Artifact
+        uses: dawidd6/action-download-artifact@v3
+        with:
+          workflow: build.yml
+          name: build-artifact
+          path: ./deploy-dist
+
+      - name: Deploy files via SCP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          port: ${{ secrets.SERVER_PORT }}
+          source: "./deploy-dist/*"
+          target: ${{ secrets.DEPLOY_PATH }}
+          strip_components: 1
+
+      - name: Restart PM2 on Windows Server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          port: ${{ secrets.SERVER_PORT }}
+          # 在 Windows OpenSSH 中，默认 shell 可能是 cmd 或 powershell
+          script: |
+            cd "${{ secrets.DEPLOY_PATH }}"
+            pm2 restart rui_xing || pm2 start server.js --name "rui_xing"
