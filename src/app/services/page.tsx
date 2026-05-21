@@ -13,6 +13,7 @@ import { services } from "@/data/services";
 import { scenarios } from "@/data/scenarios";
 import { faqs } from "@/data/faqs";
 import { ArrowRight, Scale, Calculator, Receipt, CheckCircle2, AlertCircle, PlayCircle, Target, Users } from "lucide-react";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "服务中心｜瑞兴税达法财税一体化综合服务",
@@ -32,24 +33,21 @@ export default function ServicesPage() {
       <FaqJsonLd />
 
       {/* 1. 页面 Hero */}
-      <section className="relative overflow-hidden bg-brand-dark text-white py-20 md:py-32">
+      <section className="relative overflow-hidden bg-brand-dark text-white py-16 md:py-32">
         <Container className="relative z-10">
-          <div className="max-w-4xl">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-tight">
+          <div className="max-w-4xl text-center md:text-left">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-tight">
               法财税一体化综合服务
             </h1>
-            <p className="text-lg md:text-xl text-gray-300 mb-10 leading-relaxed max-w-3xl">
+            <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-10 leading-relaxed max-w-3xl">
               围绕企业经营、交易、投融资、税务稽查、争议解决与财富安排等场景，瑞兴税达以税务、财务、法律等复合视角，为企业和企业家提供从风险识别、方案设计到沟通应对的一体化服务。
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
               <Link href="/contact" className="w-full sm:w-auto">
                 <ContactButton className="w-full" />
               </Link>
               <Button asChild variant="outline" size="lg" className="w-full sm:w-auto px-8 py-6 rounded-[16px] text-base border-white/20 bg-white/10 hover:bg-white/20 text-white">
                 <Link href="#service-list">查看服务项目</Link>
-              </Button>
-              <Button asChild variant="ghost" size="lg" className="w-full sm:w-auto px-8 py-6 rounded-[16px] text-base text-gray-300 hover:text-white hover:bg-white/5">
-                <Link href="#solutions">查看典型场景</Link>
               </Button>
             </div>
           </div>
@@ -58,29 +56,29 @@ export default function ServicesPage() {
       </section>
 
       {/* 2. 服务总览 */}
-      <section id="service-list" className="py-24 bg-brand-beige/30 scroll-mt-20">
+      <section id="service-list" className="py-16 md:py-24 bg-brand-beige/30 scroll-mt-20">
         <Container>
           <SectionHeader title="核心服务项目" />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+          <ScrollReveal className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mt-8" stagger={0.1}>
             {services.map((service, index) => (
               <Card key={service.id} className="flex flex-col h-full border-brand-border hover:border-brand-red/30 hover:shadow-md transition-all">
-                <CardHeader>
-                  <div className="text-4xl font-black text-brand-beige mb-2">0{index + 1}</div>
-                  <CardTitle className="text-xl text-brand-dark">{service.title}</CardTitle>
+                <CardHeader className="pb-4">
+                  <div className="text-3xl md:text-4xl font-black text-brand-beige mb-2">0{index + 1}</div>
+                  <CardTitle className="text-lg md:text-xl text-brand-dark">{service.title}</CardTitle>
                 </CardHeader>
-                <CardContent className="flex-1">
-                  <p className="text-brand-gray">{service.summary}</p>
+                <CardContent className="flex-1 pb-4">
+                  <p className="text-sm md:text-base text-brand-gray">{service.summary}</p>
                 </CardContent>
-                <CardFooter>
+                <CardFooter className="pt-0">
                 <Button asChild variant="ghost" className="text-brand-red hover:text-brand-red hover:bg-brand-red/5 -ml-4">
                   <Link href={`#${service.id}`}>
-                    查看{service.title}服务 <ArrowRight className="ml-2 w-4 h-4" />
+                    查看详情 <ArrowRight className="ml-2 w-4 h-4" />
                   </Link>
                 </Button>
               </CardFooter>
               </Card>
             ))}
-          </div>
+          </ScrollReveal>
         </Container>
       </section>
 
@@ -88,13 +86,13 @@ export default function ServicesPage() {
       <section className="py-24 bg-white">
         <Container>
           <div className="flex flex-col lg:flex-row gap-16 items-center">
-            <div className="lg:w-1/3">
+            <ScrollReveal direction="right" className="lg:w-1/3">
               <SectionHeader title="复杂问题需要综合判断" align="left" className="mb-6" />
               <p className="text-lg text-brand-gray leading-relaxed">
                 企业的重大风险往往不是单一税务问题，而是合同、账务、发票、资金、股权、交易结构交织后的综合风险。瑞兴税达以法律合规、财务真实性、税务安全性三个维度共同判断，帮助客户避免“单点合规、整体失控”。
               </p>
-            </div>
-            <div className="lg:w-2/3 grid grid-cols-1 sm:grid-cols-3 gap-6 w-full">
+            </ScrollReveal>
+            <ScrollReveal direction="left" stagger={0.15} className="lg:w-2/3 grid grid-cols-1 sm:grid-cols-3 gap-6 w-full">
               <Card className="bg-brand-beige/30 border-brand-border">
                 <CardHeader className="pb-4">
                   <Scale className="w-8 h-8 text-brand-gold mb-4" />
@@ -122,39 +120,39 @@ export default function ServicesPage() {
                   纳税义务、发票合规、税收优惠、税务风险
                 </CardContent>
               </Card>
-            </div>
+            </ScrollReveal>
           </div>
         </Container>
       </section>
 
       {/* 4. 六大服务详情 */}
-      <section className="py-24 bg-brand-beige/20">
+      <section className="py-16 md:py-24 bg-brand-beige/20">
         <Container>
           <SectionHeader title="服务详情说明" />
-          <div className="space-y-16 mt-12">
+          <ScrollReveal className="space-y-8 md:space-y-16 mt-12" stagger={0.2} distance={30}>
             {services.map((service, index) => (
-              <div key={service.id} id={service.id} className="scroll-mt-24 bg-white rounded-2xl p-8 md:p-12 shadow-sm border border-brand-border relative overflow-hidden">
+              <div key={service.id} id={service.id} className="scroll-mt-24 bg-white rounded-2xl p-6 md:p-12 shadow-sm border border-brand-border relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-brand-beige/30 rounded-bl-[100px] -z-10" />
                 
-                <div className="flex items-center gap-4 mb-8 pb-6 border-b border-brand-border">
-                  <span className="text-4xl md:text-5xl font-black text-brand-red opacity-80">
+                <div className="flex items-center gap-4 mb-6 md:mb-8 pb-6 border-b border-brand-border">
+                  <span className="text-3xl md:text-5xl font-black text-brand-red opacity-80">
                     {String(index + 1).padStart(2, '0')}
                   </span>
-                  <h3 className="text-2xl md:text-3xl font-bold text-brand-dark">
+                  <h3 className="text-xl md:text-3xl font-bold text-brand-dark">
                     {service.title}
                   </h3>
                 </div>
                 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
                   {/* 左栏：适用对象与常见问题 */}
-                  <div className="space-y-8">
+                  <div className="space-y-6 md:space-y-8">
                     <div>
-                      <h4 className="flex items-center gap-2 text-lg font-semibold text-brand-red mb-4">
+                      <h4 className="flex items-center gap-2 text-base md:text-lg font-semibold text-brand-red mb-4">
                         <Target className="w-5 h-5" /> 适用对象
                       </h4>
-                      <ul className="space-y-3">
+                      <ul className="space-y-2 md:space-y-3">
                         {service.suitableFor.map((item, idx) => (
-                          <li key={idx} className="flex items-start gap-3 text-brand-gray">
+                          <li key={idx} className="flex items-start gap-3 text-sm md:text-base text-brand-gray">
                             <span className="w-1.5 h-1.5 rounded-full bg-brand-gold mt-2 shrink-0" />
                             <span>{item}</span>
                           </li>
@@ -163,12 +161,12 @@ export default function ServicesPage() {
                     </div>
                     
                     <div>
-                      <h4 className="flex items-center gap-2 text-lg font-semibold text-brand-red mb-4">
+                      <h4 className="flex items-center gap-2 text-base md:text-lg font-semibold text-brand-red mb-4">
                         <AlertCircle className="w-5 h-5" /> 客户常见问题
                       </h4>
-                      <ul className="space-y-3">
+                      <ul className="space-y-2 md:space-y-3">
                         {service.painPoints.map((item, idx) => (
-                          <li key={idx} className="flex items-start gap-3 text-brand-gray bg-brand-beige/50 p-3 rounded-lg">
+                          <li key={idx} className="flex items-start gap-3 text-sm md:text-base text-brand-gray bg-brand-beige/50 p-3 rounded-lg">
                             <span className="text-brand-gold font-bold">Q:</span>
                             <span>{item}</span>
                           </li>
@@ -178,14 +176,14 @@ export default function ServicesPage() {
                   </div>
 
                   {/* 右栏：服务内容与交付成果 */}
-                  <div className="space-y-8 lg:border-l lg:border-brand-border lg:pl-12">
+                  <div className="space-y-6 md:space-y-8 lg:border-l lg:border-brand-border lg:pl-12">
                     <div>
-                      <h4 className="flex items-center gap-2 text-lg font-semibold text-brand-dark mb-4">
+                      <h4 className="flex items-center gap-2 text-base md:text-lg font-semibold text-brand-dark mb-4">
                         <PlayCircle className="w-5 h-5 text-brand-gold" /> 服务内容
                       </h4>
-                      <ul className="space-y-3">
+                      <ul className="space-y-2 md:space-y-3">
                         {service.serviceItems.map((item, idx) => (
-                          <li key={idx} className="flex items-start gap-3 text-brand-gray">
+                          <li key={idx} className="flex items-start gap-3 text-sm md:text-base text-brand-gray">
                             <CheckCircle2 className="w-5 h-5 text-green-600/70 shrink-0" />
                             <span>{item}</span>
                           </li>
@@ -193,13 +191,13 @@ export default function ServicesPage() {
                       </ul>
                     </div>
                     
-                    <div className="bg-gray-50 p-6 rounded-xl">
-                      <h4 className="flex items-center gap-2 text-lg font-semibold text-brand-dark mb-4">
+                    <div className="bg-gray-50 p-4 md:p-6 rounded-xl">
+                      <h4 className="flex items-center gap-2 text-base md:text-lg font-semibold text-brand-dark mb-4">
                         <Receipt className="w-5 h-5 text-brand-gold" /> 交付成果
                       </h4>
                       <ul className="space-y-2">
                         {service.deliverables.map((item, idx) => (
-                          <li key={idx} className="flex items-center gap-2 text-brand-dark font-medium">
+                          <li key={idx} className="flex items-center gap-2 text-sm md:text-base text-brand-dark font-medium">
                             <span className="w-1.5 h-1.5 bg-brand-red shrink-0 rotate-45" />
                             <span>{item}</span>
                           </li>
@@ -210,7 +208,7 @@ export default function ServicesPage() {
                 </div>
               </div>
             ))}
-          </div>
+          </ScrollReveal>
         </Container>
       </section>
 
@@ -222,7 +220,7 @@ export default function ServicesPage() {
             subtitle="很多企业遇到的不是单一税务问题，而是合同、账务、发票、资金、股权、交易结构交织后的综合风险。以下场景适合采用法财税一体化方式处理。"
           />
           
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-12">
+          <ScrollReveal className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-12" stagger={0.1}>
             {scenarios.map((scenario) => (
               <Card key={scenario.id} className="border-brand-border shadow-sm flex flex-col">
                 <CardHeader className="bg-brand-beige/30 border-b border-brand-border/50">
@@ -240,7 +238,7 @@ export default function ServicesPage() {
                 </CardContent>
               </Card>
             ))}
-          </div>
+          </ScrollReveal>
         </Container>
       </section>
 
@@ -249,7 +247,7 @@ export default function ServicesPage() {
         <Container>
           <SectionHeader title="标准化服务流程" className="[&>h2]:text-white mb-16" />
           
-          <div className="relative">
+          <ScrollReveal className="relative" distance={20}>
             {/* 横向/纵向连接线 */}
             <div className="absolute left-[28px] top-0 bottom-0 w-0.5 bg-brand-gold/20 md:left-0 md:right-0 md:top-[28px] md:bottom-auto md:w-full md:h-0.5" />
             
@@ -273,14 +271,14 @@ export default function ServicesPage() {
                 </div>
               ))}
             </div>
-          </div>
+          </ScrollReveal>
         </Container>
       </section>
 
       {/* 7. 适合客户类型 */}
       <section className="py-24 bg-brand-beige/50">
         <Container>
-          <div className="max-w-4xl mx-auto bg-white rounded-3xl p-10 md:p-16 shadow-sm border border-brand-border">
+          <ScrollReveal className="max-w-4xl mx-auto bg-white rounded-3xl p-10 md:p-16 shadow-sm border border-brand-border">
             <div className="flex items-center justify-center mb-8">
               <Users className="w-12 h-12 text-brand-red" />
             </div>
@@ -298,19 +296,20 @@ export default function ServicesPage() {
               ].map((item, idx) => (
                 <div key={idx} className="flex items-start gap-4">
                   <CheckCircle2 className="w-6 h-6 text-brand-gold shrink-0 mt-0.5" />
-                  <span className="text-brand-dark leading-relaxed">{item}</span>
+                  <p className="text-brand-gray text-lg">{item}</p>
                 </div>
               ))}
             </div>
-          </div>
+          </ScrollReveal>
         </Container>
       </section>
 
       {/* 8. 服务 FAQ */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-white border-t border-brand-border/30">
         <Container>
-          <SectionHeader title="常见问题" />
-          <div className="max-w-3xl mx-auto mt-8">
+          <SectionHeader title="服务常见问题" />
+          
+          <ScrollReveal className="max-w-3xl mx-auto">
             <Accordion type="single" collapsible className="w-full space-y-4">
               {faqs.slice(0, 5).map((category, catIdx) => (
                 category.items.slice(0, 1).map((faq, idx) => (
@@ -329,25 +328,32 @@ export default function ServicesPage() {
                 ))
               ))}
             </Accordion>
-          </div>
+            
+            <div className="text-center mt-12">
+              <Button asChild variant="outline" className="border-brand-red text-brand-red hover:bg-brand-red hover:text-white">
+                <Link href="/faq">查看更多常见问题</Link>
+              </Button>
+            </div>
+          </ScrollReveal>
         </Container>
       </section>
 
       {/* 9. 底部 CTA */}
       <section className="py-24 bg-brand-red text-white relative overflow-hidden">
         <Container className="relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
+          <ScrollReveal className="max-w-4xl mx-auto text-center" distance={30}>
             <h2 className="text-3xl md:text-4xl font-bold mb-6 leading-tight">
-              不确定企业当前问题属于哪类服务？
+              立即预约法财税专家进行初步评估
             </h2>
-            <p className="text-lg md:text-xl text-white/80 mb-10 max-w-3xl mx-auto leading-relaxed">
-              可以先提交基本情况，我们会根据事项阶段、风险类型、资料完整度和紧急程度，判断适合采用专项服务还是常年顾问服务。
+            <p className="text-lg md:text-xl text-white/80 mb-10 max-w-3xl mx-auto">
+              我们的专家团队将为您提供专业的风险判断与应对建议，助您从容应对复杂涉税事项。
             </p>
             <Link href="/contact">
               <ContactButton className="bg-white text-brand-red hover:bg-brand-beige" />
             </Link>
-          </div>
+          </ScrollReveal>
         </Container>
+        
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/3" />
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-black/10 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4" />
       </section>

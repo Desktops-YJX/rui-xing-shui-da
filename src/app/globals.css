@@ -44,7 +44,7 @@
 }
 
 :root {
-  --background: #FFFFFF;
+  --background: #FFF9F9; /* 注入微量品牌红的底色，增加视觉温暖感与专业度 */
   --foreground: #1F2933;
   
   --card: #FFFFFF;
@@ -103,6 +103,6 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-background text-foreground font-sans overflow-x-hidden;
   }
 }

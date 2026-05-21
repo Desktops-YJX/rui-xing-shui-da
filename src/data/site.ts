@@ -37,14 +37,44 @@ export const siteData = {
     }
   ],
 
+  partners: [
+    { name: "重庆市国际税收研究会" },
+    { name: "重庆市税务学会" },
+    { name: "西南政法大学" },
+    { name: "北京盈科（成都）律师事务所" },
+    { name: "四川省建设会计学会" },
+    { name: "中国移动" },
+    { name: "中国电信" },
+    { name: "万科地产" },
+    { name: "龙湖地产" },
+    { name: "华润置地" }
+  ],
+
+  clients: [
+    { name: "中铁八局" },
+    { name: "中建三局" },
+    { name: "重庆燃气" },
+    { name: "成都银行" },
+    { name: "重庆啤酒" },
+    { name: "长安汽车" },
+    { name: "金科集团" },
+    { name: "新力地产" },
+    { name: "美的置业" },
+    { name: "蓝光发展" }
+  ],
+
   contact: {
+    businessHours: "7x24H",
     chengdu: {
       address: "成都市高新区锦晖西一街 99 号布鲁明顿广场 B 座 2101",
-      phone: "189 8387 1369"
+      phone: "189 8387 1369",
+      image: "/images/assets/chengdu.jpg"
     },
     chongqing: {
       address: "重庆市渝北区食品城大道 18 号重庆创意公园 24 栋 6 单元 4 楼",
-      phone: "023-67022494"
+      phone: "023-67022494 / 156 9612 1454",
+      wechat: "156 9612 1454",
+      image: "/images/assets/chongqin.jpg"
     }
   }
 };

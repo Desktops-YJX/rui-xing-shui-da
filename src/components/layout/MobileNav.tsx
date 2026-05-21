@@ -22,7 +22,7 @@ export function MobileNav() {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" className="md:hidden">
+        <Button variant="ghost" size="icon" className="lg:hidden">
           <Menu className="h-6 w-6" />
           <span className="sr-only">打开菜单</span>
         </Button>
@@ -56,7 +56,7 @@ export function MobileNav() {
             })}
           </div>
           <div className="mt-4 pt-6 border-t border-brand-border">
-            <Button asChild className="w-full rounded-full" size="lg">
+            <Button asChild className="w-full rounded-full bg-brand-red hover:bg-brand-red/90 text-white border-none" size="lg">
               <Link href="/contact" onClick={() => setOpen(false)}>
                 预约咨询
               </Link>

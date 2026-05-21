@@ -7,6 +7,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { faqs } from "@/data/faqs";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 export function HomeFaq() {
   return (
@@ -14,7 +15,7 @@ export function HomeFaq() {
       <Container>
         <SectionHeader title="常见问题解答" />
         
-        <div className="max-w-3xl mx-auto mt-8">
+        <ScrollReveal className="max-w-3xl mx-auto mt-8" distance={30}>
           <Accordion type="single" collapsible className="w-full space-y-6">
             {faqs.slice(0, 3).map((category, catIdx) => (
               <div key={catIdx} className="space-y-4">
@@ -36,7 +37,7 @@ export function HomeFaq() {
               </div>
             ))}
           </Accordion>
-        </div>
+        </ScrollReveal>
       </Container>
     </section>
   );

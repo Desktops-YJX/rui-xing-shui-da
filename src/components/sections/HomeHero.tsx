@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { siteData } from "@/data/site";
 import { ShieldCheck } from "lucide-react";
+import Beams from "@/components/ui/Beams";
 
 const TAGS = [
   "法财税一体化",
@@ -17,6 +18,36 @@ const TAGS = [
 export function HomeHero() {
   return (
     <section className="relative overflow-hidden bg-brand-beige py-20 md:py-32">
+      {/* Beams Background */}
+      <div className="absolute inset-0 z-0 opacity-80">
+        <Beams 
+          beamWidth={4}
+          beamHeight={30}
+          beamNumber={10}
+          beamColor="#8B1E2D"
+          lightColor="#ffffff"
+          speed={0.5}
+          noiseIntensity={1.5}
+          scale={0.2}
+          rotation={20}
+          backgroundColor="transparent"
+        />
+      </div>
+      <div className="absolute inset-0 z-0 opacity-30">
+        <Beams 
+          beamWidth={3}
+          beamHeight={35}
+          beamNumber={8}
+          beamColor="#ffffff"
+          lightColor="#8B1E2D"
+          speed={0.3}
+          noiseIntensity={1.2}
+          scale={0.15}
+          rotation={-20}
+          backgroundColor="transparent"
+        />
+      </div>
+
       <Container className="relative z-10">
         <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
           {/* Tags */}
@@ -29,14 +60,14 @@ export function HomeHero() {
           </div>
 
           {/* Title */}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-brand-dark mb-6 leading-tight tracking-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-brand-dark mb-6 leading-tight tracking-tight">
             以专业守护企业税务安全
             <br className="hidden md:block" />
             <span className="text-brand-red">以法税融合创造长期价值</span>
           </h1>
 
           {/* Subtitle */}
-          <p className="text-lg md:text-xl text-brand-gray mb-10 leading-relaxed max-w-3xl">
+          <p className="text-base sm:text-lg md:text-xl text-black mb-10 leading-relaxed max-w-3xl font-medium px-4 md:px-0">
             {siteData.hero.subtitle}
           </p>
 
@@ -55,7 +86,7 @@ export function HomeHero() {
           </div>
           
           {/* Trust indicator */}
-          <div className="mt-12 flex items-center gap-2 text-sm text-brand-gray">
+          <div className="mt-12 flex items-center gap-2 text-sm text-black font-semibold">
             <ShieldCheck className="w-5 h-5 text-brand-gold" />
             <span>专业涉税服务机构认证</span>
           </div>

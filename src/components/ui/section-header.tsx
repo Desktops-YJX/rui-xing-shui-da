@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import ScrollFloat from "./ScrollFloat";
 
 interface SectionHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
@@ -16,12 +17,19 @@ export function SectionHeader({ title, subtitle, align = "center", className, ..
       )} 
       {...props}
     >
-      <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 tracking-tight">
+      <ScrollFloat 
+        containerClassName="mb-4"
+        textClassName="text-3xl md:text-4xl font-bold text-brand-dark tracking-tight"
+        animationDuration={0.8}
+        stagger={0.02}
+        scrollStart="top bottom-=5%"
+        scrub={false}
+      >
         {title}
-      </h2>
-      <div className="w-16 h-1 bg-primary mb-6" /> {/* 瑞兴税达深红强调线 */}
+      </ScrollFloat>
+      <div className="w-16 h-1 bg-brand-red mb-6" /> {/* 瑞兴税达深红强调线 */}
       {subtitle && (
-        <p className="text-lg text-muted-foreground max-w-[800px]">
+        <p className="text-lg text-brand-gray max-w-[800px]">
           {subtitle}
         </p>
       )}

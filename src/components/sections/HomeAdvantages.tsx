@@ -2,6 +2,7 @@ import { Container } from "@/components/layout/Container";
 import { SectionHeader } from "@/components/ui/section-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Scale, ShieldAlert, Users, Clock } from "lucide-react";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 const ADVANTAGES = [
   {
@@ -28,14 +29,20 @@ const ADVANTAGES = [
 
 export function HomeAdvantages() {
   return (
-    <section className="py-24 bg-white">
+    <section className="py-16 md:py-24 bg-background overflow-hidden">
       <Container>
-        <SectionHeader 
-          title="为什么选择瑞兴税达" 
-          subtitle="企业的重大风险往往不是单一税务问题，而是法律、财务、税务交织后的综合风险。瑞兴税达以复合专业视角帮助客户识别风险、设计路径、应对争议。"
-        />
+        <ScrollReveal>
+          <SectionHeader 
+            title="为什么选择瑞兴税达？" 
+            subtitle="立足川渝，以“税务师+会计师+律师”的专业组合，为您提供高合规、高安全性的法财税解决方案。"
+          />
+        </ScrollReveal>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 mt-12">
+        <ScrollReveal 
+          className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 mt-12"
+          stagger={0.15}
+          distance={30}
+        >
           {ADVANTAGES.map((adv, index) => {
             const Icon = adv.icon;
             return (
@@ -57,7 +64,7 @@ export function HomeAdvantages() {
               </Card>
             );
           })}
-        </div>
+        </ScrollReveal>
       </Container>
     </section>
   );

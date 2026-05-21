@@ -6,13 +6,14 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cases } from "@/data/cases";
 import { Briefcase } from "lucide-react";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 export function HomeCases() {
   // 只展示前3个案例
   const displayCases = cases.slice(0, 3);
 
   return (
-    <section className="py-24 bg-white relative">
+    <section className="py-24 bg-background relative overflow-hidden">
       <Container>
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
           <SectionHeader 
@@ -26,7 +27,11 @@ export function HomeCases() {
           </Button>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+        <ScrollReveal 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12"
+          stagger={0.15}
+          distance={30}
+        >
           {displayCases.map((c) => (
             <Card key={c.slug} className="flex flex-col h-full border-brand-border hover:border-brand-red/30 hover:shadow-md transition-all group">
               <CardHeader className="pb-4">
@@ -56,7 +61,7 @@ export function HomeCases() {
               </CardContent>
             </Card>
           ))}
-        </div>
+        </ScrollReveal>
         
         <div className="mt-8 md:hidden flex justify-center">
           <Button asChild variant="outline" className="w-full">

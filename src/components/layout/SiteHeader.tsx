@@ -12,7 +12,6 @@ export const MAIN_NAV = [
   { title: "关于我们", href: "/about" },
   { title: "服务中心", href: "/services" },
   { title: "案例中心", href: "/cases" },
-  { title: "专家团队", href: "/experts" },
   { title: "FAQ", href: "/faq" },
   { title: "联系我们", href: "/contact" },
 ];
@@ -21,7 +20,7 @@ export function SiteHeader() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-brand-border bg-white/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 w-full border-b border-brand-border bg-background/80 backdrop-blur-md">
       <Container>
         <div className="flex h-20 items-center justify-between">
           {/* Logo */}
@@ -53,7 +52,7 @@ export function SiteHeader() {
 
           {/* Action & Mobile Toggle */}
           <div className="flex items-center gap-4">
-            <Button asChild className="hidden md:inline-flex rounded-full px-6">
+            <Button asChild className="hidden md:inline-flex rounded-full px-6 bg-brand-red hover:bg-brand-red/90 text-white border-none">
               <Link href="/contact">预约咨询</Link>
             </Button>
             <div className="lg:hidden">

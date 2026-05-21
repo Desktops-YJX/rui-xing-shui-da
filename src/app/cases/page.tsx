@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cases } from "@/data/cases";
 import { Briefcase } from "lucide-react";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "案例中心｜瑞兴税达法财税服务案例",
@@ -30,37 +31,39 @@ export default function CasesPage() {
       />
 
       {/* 2. 案例列表 */}
-      <section className="py-24 bg-brand-beige/20">
+      <section className="py-16 md:py-24 bg-brand-beige/20">
         <Container>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {cases.map((c) => (
-              <Card key={c.slug} className="flex flex-col h-full border-brand-border hover:border-brand-red/30 hover:shadow-md transition-all group bg-white">
-                <CardHeader className="pb-4">
-                  <div className="mb-4 flex flex-wrap gap-2">
-                    <Badge variant="secondary" className="bg-brand-beige text-brand-dark hover:bg-brand-beige/80">
-                      <Briefcase className="w-3 h-3 mr-1" />
-                      {c.industry}
-                    </Badge>
-                    <Badge variant="outline" className="border-brand-red/30 text-brand-red">
-                      {c.riskType}
-                    </Badge>
-                  </div>
-                  <CardTitle className="text-xl leading-snug group-hover:text-brand-red transition-colors">
-                    {c.title}
-                  </CardTitle>
-                </CardHeader>
-                
-                <CardContent className="flex-1 space-y-4">
-                  <div>
-                    <h5 className="text-sm font-semibold text-brand-dark mb-1">核心问题</h5>
-                    <p className="text-sm text-brand-gray">{c.issue}</p>
-                  </div>
-                  <div>
-                    <h5 className="text-sm font-semibold text-brand-dark mb-1">服务工作摘要</h5>
-                    <p className="text-sm text-brand-gray">{c.work}</p>
-                  </div>
-                </CardContent>
-              </Card>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {cases.map((c, idx) => (
+              <ScrollReveal key={c.slug} stagger={idx * 0.1}>
+                <Card className="flex flex-col h-full border-brand-border hover:border-brand-red/30 hover:shadow-md transition-all group bg-white">
+                  <CardHeader className="pb-4">
+                    <div className="mb-4 flex flex-wrap gap-2">
+                      <Badge variant="secondary" className="bg-brand-beige text-brand-dark hover:bg-brand-beige/80 text-xs">
+                        <Briefcase className="w-3 h-3 mr-1" />
+                        {c.industry}
+                      </Badge>
+                      <Badge variant="outline" className="border-brand-red/30 text-brand-red text-xs">
+                        {c.riskType}
+                      </Badge>
+                    </div>
+                    <CardTitle className="text-lg md:text-xl leading-snug group-hover:text-brand-red transition-colors">
+                      {c.title}
+                    </CardTitle>
+                  </CardHeader>
+                  
+                  <CardContent className="flex-1 space-y-4">
+                    <div>
+                      <h5 className="text-xs md:text-sm font-semibold text-brand-dark mb-1">核心问题</h5>
+                      <p className="text-xs md:text-sm text-brand-gray">{c.issue}</p>
+                    </div>
+                    <div>
+                      <h5 className="text-xs md:text-sm font-semibold text-brand-dark mb-1">服务工作摘要</h5>
+                      <p className="text-xs md:text-sm text-brand-gray">{c.work}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </ScrollReveal>
             ))}
           </div>
         </Container>

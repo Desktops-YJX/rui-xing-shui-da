@@ -3,6 +3,7 @@ import { Container } from "@/components/layout/Container";
 import { SectionHeader } from "@/components/ui/section-header";
 import { Button } from "@/components/ui/button";
 import { AlertCircle, ArrowRight } from "lucide-react";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 const SCENARIOS = [
   "收到税务稽查通知",
@@ -13,11 +14,11 @@ const SCENARIOS = [
 
 export function HomeScenarios() {
   return (
-    <section className="py-24 bg-white">
+    <section className="py-16 md:py-24 bg-background overflow-hidden">
       <Container>
         <div className="flex flex-col lg:flex-row gap-12 items-center">
           {/* 左侧：标题与引导 */}
-          <div className="lg:w-1/3">
+          <ScrollReveal direction="right" className="lg:w-1/3">
             <SectionHeader 
               title="企业常见法财税风险场景" 
               align="left"
@@ -31,10 +32,10 @@ export function HomeScenarios() {
                 查看完整服务方案 <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
             </Button>
-          </div>
+          </ScrollReveal>
 
           {/* 右侧：场景列表 */}
-          <div className="lg:w-2/3 w-full grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <ScrollReveal direction="left" stagger={0.1} className="lg:w-2/3 w-full grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
             {SCENARIOS.map((scenario, idx) => (
               <div 
                 key={idx} 
@@ -44,7 +45,7 @@ export function HomeScenarios() {
                 <h3 className="text-lg font-bold text-brand-dark">{scenario}</h3>
               </div>
             ))}
-          </div>
+          </ScrollReveal>
         </div>
       </Container>
     </section>

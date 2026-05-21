@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { Container } from "@/components/layout/Container";
 import { ContactButton } from "@/components/ui/contact-button";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 export function HomeCta() {
   return (
     <section className="py-24 bg-brand-red text-white relative overflow-hidden">
       <Container className="relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
+        <ScrollReveal className="max-w-4xl mx-auto text-center" distance={30}>
           <h2 className="text-3xl md:text-4xl font-bold mb-6 leading-tight">
             正在面对税务检查、账务清理、股权调整、并购重组或重大交易决策？
           </h2>
@@ -16,7 +17,7 @@ export function HomeCta() {
           <Link href="/contact">
             <ContactButton className="bg-white text-brand-red hover:bg-brand-beige" />
           </Link>
-        </div>
+        </ScrollReveal>
       </Container>
       
       {/* Decorative background pattern */}

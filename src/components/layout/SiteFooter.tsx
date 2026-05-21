@@ -24,7 +24,7 @@ export function SiteFooter() {
 
           {/* 联系方式 - 成都 */}
           <div className="lg:col-span-1">
-            <h4 className="text-lg font-semibold mb-4 text-gray-100">成都总部</h4>
+            <h4 className="text-lg font-semibold mb-4 text-gray-100">成都区域</h4>
             <address className="not-italic text-sm text-gray-400 space-y-2">
               <p>{siteData.contact.chengdu.address}</p>
               <p>电话：{siteData.contact.chengdu.phone}</p>
@@ -33,7 +33,7 @@ export function SiteFooter() {
 
           {/* 联系方式 - 重庆 */}
           <div className="lg:col-span-1">
-            <h4 className="text-lg font-semibold mb-4 text-gray-100">重庆分部</h4>
+            <h4 className="text-lg font-semibold mb-4 text-gray-100">重庆区域</h4>
             <address className="not-italic text-sm text-gray-400 space-y-2">
               <p>{siteData.contact.chongqing.address}</p>
               <p>电话：{siteData.contact.chongqing.phone}</p>

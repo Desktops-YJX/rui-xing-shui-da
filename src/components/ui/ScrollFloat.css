@@ -1,0 +1,14 @@
+.scroll-float { 
+  overflow: hidden; 
+} 
+ 
+.scroll-float-text { 
+  display: inline-block; 
+  /* Removed the hardcoded large font-size from React Bits to use Tailwind classes or inheritance */
+  text-align: inherit; 
+  line-height: 1.2; 
+} 
+ 
+.char { 
+  display: inline-block; 
+} 

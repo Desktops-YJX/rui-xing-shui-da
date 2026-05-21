@@ -4,6 +4,7 @@ import { SectionHeader } from "@/components/ui/section-header";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, FileCheck, Shield, Gavel, Building2, Headphones, Landmark } from "lucide-react";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 const SERVICES_OVERVIEW = [
   {
@@ -46,11 +47,20 @@ const SERVICES_OVERVIEW = [
 
 export function HomeServices() {
   return (
-    <section className="py-24 bg-brand-beige/50">
+    <section className="py-16 md:py-24 bg-brand-beige/50 overflow-hidden">
       <Container>
-        <SectionHeader title="核心服务" />
+        <ScrollReveal>
+          <SectionHeader 
+            title="核心服务中心" 
+            subtitle="立足税务合规，融合法律与财务视角，提供从预防、应对到化解的一体化专业服务。"
+          />
+        </ScrollReveal>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+        <ScrollReveal 
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 mt-12"
+          stagger={0.1}
+          distance={20}
+        >
           {SERVICES_OVERVIEW.map((service) => {
             const Icon = service.icon;
             return (
@@ -69,14 +79,14 @@ export function HomeServices() {
                 <CardFooter>
                   <Button asChild variant="ghost" className="text-brand-red hover:text-brand-red hover:bg-brand-red/5 -ml-4">
                     <Link href={`/services#${service.id}`}>
-                      查看{service.title}服务 <ArrowRight className="ml-2 w-4 h-4" />
+                      查看详情 <ArrowRight className="ml-2 w-4 h-4" />
                     </Link>
                   </Button>
                 </CardFooter>
               </Card>
             );
           })}
-        </div>
+        </ScrollReveal>
       </Container>
     </section>
   );
