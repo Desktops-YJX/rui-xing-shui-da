@@ -42,11 +42,31 @@ export function SiteFooter() {
         </div>
 
         {/* 底部声明与链接 */}
-        <div className="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
-          <p className="text-center md:text-left max-w-3xl leading-relaxed">
-            本网站内容仅供一般信息参考，不构成正式法律、财务、税务意见。具体事项应结合事实、证据、交易背景和适用法规进行专业判断。
-          </p>
-          <div className="flex gap-4 shrink-0">
+        <div className="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center md:items-start gap-4 text-xs text-gray-500">
+          <div className="flex flex-col gap-2 text-center md:text-left max-w-3xl">
+            <p className="leading-relaxed">
+              本网站内容仅供一般信息参考，不构成正式法律、财务、税务意见。具体事项应结合事实、证据、交易背景和适用法规进行专业判断。
+            </p>
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mt-2">
+              <a 
+                href="https://beian.miit.gov.cn/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="hover:text-white transition-colors"
+              >
+                蜀ICP备2026026083号-1
+              </a>
+              <a 
+                href="https://beian.mps.gov.cn/#/query/webSearch?code=51010702044293" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="hover:text-white transition-colors flex items-center gap-1"
+              >
+                川公网安备51010702044293号
+              </a>
+            </div>
+          </div>
+          <div className="flex gap-4 shrink-0 mt-4 md:mt-0">
             <Link href="/privacy" className="hover:text-white transition-colors">隐私政策</Link>
             <Link href="/terms" className="hover:text-white transition-colors">服务条款</Link>
           </div>
