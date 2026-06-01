@@ -1,4 +1,4 @@
-name: Build Next.js App
+name: Build Docker Image
 
 on:
   push:
@@ -12,42 +12,26 @@ on:
 
 jobs:
   build:
-    name: Build and Package
+    name: Build and Export Image
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-      - name: Setup Next.js Cache
-        uses: actions/cache@v4
-        with:
-          path: ${{ github.workspace }}/.next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
-          restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+      - name: Build Docker Image
+        run: docker buildx build --load --tag ruixing-taxpro-site:latest .
 
-      - name: Install Dependencies
-        run: npm ci
-
-      - name: Build Next.js App
-        run: npm run build
-
-      - name: Prepare Standalone Output
+      - name: Export Docker Image Artifact
         run: |
-          # 复制 public 静态文件到 standalone 目录
-          cp -r public .next/standalone/
-          # 复制 .next/static 静态资源到 standalone 目录
-          cp -r .next/static .next/standalone/.next/
+          mkdir -p dist
+          docker save ruixing-taxpro-site:latest -o dist/ruixing-taxpro-site.tar
 
-      - name: Upload Build Artifact
+      - name: Upload Docker Image Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: build-artifact
-          path: .next/standalone/
+          name: docker-image
+          path: dist/ruixing-taxpro-site.tar
           retention-days: 7

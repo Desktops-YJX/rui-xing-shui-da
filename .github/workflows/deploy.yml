@@ -1,4 +1,4 @@
-name: Deploy to Windows Server
+name: Deploy Docker Container
 
 on:
   workflow_dispatch:
@@ -7,61 +7,142 @@ on:
         description: '选择部署环境'
         required: true
         default: 'production'
+      host_port:
+        description: '服务器暴露端口'
+        required: true
+        default: '3001'
 
 jobs:
   deploy:
-    name: Deploy to Server
+    name: Deploy to Debian Server
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
     steps:
-      - name: Download Build Artifact
+      - name: Download Docker Image Artifact
         uses: dawidd6/action-download-artifact@v3
         with:
           workflow: build.yml
-          name: build-artifact
-          path: ./deploy-dist
+          branch: main
+          workflow_conclusion: success
+          name: docker-image
+          path: ./docker-image
 
-      - name: Deploy files via SCP
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SERVER_USER }}
-          password: ${{ secrets.SERVER_PASSWORD }}
-          port: ${{ secrets.SERVER_PORT }}
-          source: "./deploy-dist/*"
-          target: ${{ secrets.DEPLOY_PATH }}
-          strip_components: 1
-
-      - name: Initialize Server and Restart App
+      - name: Prepare Server Directories
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SERVER_USER }}
           password: ${{ secrets.SERVER_PASSWORD }}
           port: ${{ secrets.SERVER_PORT }}
-          # 在 Windows OpenSSH 中执行环境检查、依赖安装和应用启动
           script: |
-            # 1. 检查并安装 Node.js (如果没有安装)
-            if (!(Get-Command node -ErrorAction SilentlyContinue)) {
-              echo "Node.js not found. Downloading and installing Node.js..."
-              # 使用 PowerShell 下载便携版 Node.js
-              Invoke-WebRequest -Uri "https://nodejs.org/dist/v20.14.0/node-v20.14.0-win-x64.zip" -OutFile "C:\node.zip"
-              Expand-Archive -Path "C:\node.zip" -DestinationPath "C:\nodejs" -Force
-              # 将 Node.js 添加到环境变量 (仅当前会话)
-              $env:Path += ";C:\nodejs\node-v20.14.0-win-x64"
-              # 将 Node.js 添加到系统环境变量 (永久生效)
-              $oldPath = [Environment]::GetEnvironmentVariable("Path", "Machine")
-              if ($oldPath -notmatch "C:\\nodejs\\node-v20.14.0-win-x64") {
-                [Environment]::SetEnvironmentVariable("Path", $oldPath + ";C:\nodejs\node-v20.14.0-win-x64", "Machine")
-              }
-              echo "Node.js installed successfully."
-            }
+            set -eu
 
-            # 2. 检查并安装 PM2 (如果不存在)
-            if (!(Get-Command pm2 -ErrorAction SilentlyContinue)) {
-              echo "PM2 not found. Installing PM2 globally..."
-              npm install -g pm2
-            }
-            
-            # 3. 启动或重启 Next.js 应用
-            cd "${{ secrets.DEPLOY_PATH }}"
-            pm2 restart rui_xing || pm2 start server.js --name "rui_xing"
+            APP_DIR="${{ secrets.DEPLOY_PATH }}"
+
+            if [ "$(id -u)" -eq 0 ]; then
+              SUDO=""
+            else
+              SUDO="sudo"
+            fi
+
+            $SUDO mkdir -p "$APP_DIR/artifacts"
+            $SUDO chown -R "$(id -un)":"$(id -gn)" "$APP_DIR"
+
+      - name: Upload Image to Server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          port: ${{ secrets.SERVER_PORT }}
+          source: "./docker-image/ruixing-taxpro-site.tar"
+          target: "${{ secrets.DEPLOY_PATH }}/artifacts"
+
+      - name: Create .env File
+        if: ${{ secrets.APP_ENV_FILE != '' }}
+        run: |
+          cat <<'EOF' > .deploy.env
+          ${{ secrets.APP_ENV_FILE }}
+          EOF
+
+      - name: Upload .env to Server
+        if: ${{ secrets.APP_ENV_FILE != '' }}
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          port: ${{ secrets.SERVER_PORT }}
+          source: ".deploy.env"
+          target: "${{ secrets.DEPLOY_PATH }}/"
+          strip_components: 0
+          overwrite: true
+
+      - name: Rename Uploaded .env File
+        if: ${{ secrets.APP_ENV_FILE != '' }}
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          port: ${{ secrets.SERVER_PORT }}
+          script: |
+            set -eu
+
+            APP_DIR="${{ secrets.DEPLOY_PATH }}"
+            mv "$APP_DIR/.deploy.env" "$APP_DIR/.env"
+
+      - name: Load Image and Restart Container
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          port: ${{ secrets.SERVER_PORT }}
+          script: |
+            set -eu
+
+            APP_DIR="${{ secrets.DEPLOY_PATH }}"
+            ARTIFACT_DIR="$APP_DIR/artifacts"
+            IMAGE_TAR="$ARTIFACT_DIR/ruixing-taxpro-site.tar"
+            IMAGE_NAME="ruixing-taxpro-site:latest"
+            CONTAINER_NAME="rui_xing"
+            HOST_PORT="${{ inputs.host_port }}"
+            CONTAINER_PORT="3001"
+            ENV_FILE="$APP_DIR/.env"
+
+            if [ "$(id -u)" -eq 0 ]; then
+              SUDO=""
+            else
+              SUDO="sudo"
+            fi
+
+            mkdir -p "$ARTIFACT_DIR"
+
+            if ! command -v docker >/dev/null 2>&1; then
+              $SUDO apt-get update
+              $SUDO apt-get install -y ca-certificates curl gnupg
+              $SUDO install -m 0755 -d /etc/apt/keyrings
+              curl -fsSL https://download.docker.com/linux/debian/gpg | $SUDO gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+              $SUDO chmod a+r /etc/apt/keyrings/docker.gpg
+              echo \
+                "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian $(. /etc/os-release && echo "$VERSION_CODENAME") stable" \
+                | $SUDO tee /etc/apt/sources.list.d/docker.list >/dev/null
+              $SUDO apt-get update
+              $SUDO apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+            fi
+
+            $SUDO systemctl enable --now docker
+            $SUDO docker load -i "$IMAGE_TAR"
+
+            if $SUDO docker ps -a --format '{{.Names}}' | grep -Fxq "$CONTAINER_NAME"; then
+              $SUDO docker rm -f "$CONTAINER_NAME"
+            fi
+
+            RUN_ARGS="--detach --restart unless-stopped --name $CONTAINER_NAME -p ${HOST_PORT}:${CONTAINER_PORT}"
+            if [ -f "$ENV_FILE" ]; then
+              RUN_ARGS="$RUN_ARGS --env-file $ENV_FILE"
+            fi
+
+            $SUDO docker run $RUN_ARGS "$IMAGE_NAME"
+            rm -f "$IMAGE_TAR"
