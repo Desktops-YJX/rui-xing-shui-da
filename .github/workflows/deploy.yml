@@ -2,21 +2,12 @@ name: Deploy Docker Container
 
 on:
   workflow_dispatch:
-    inputs:
-      environment:
-        description: '选择部署环境'
-        required: true
-        default: 'production'
-      host_port:
-        description: '服务器暴露端口'
-        required: true
-        default: '3001'
 
 jobs:
   deploy:
     name: Deploy to Debian Server
     runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
+    environment: production
     env:
       APP_ENV_FILE: ${{ secrets.APP_ENV_FILE }}
     steps:
@@ -108,8 +99,8 @@ jobs:
             ARTIFACT_DIR="$APP_DIR/artifacts"
             IMAGE_TAR="$ARTIFACT_DIR/ruixing-taxpro-site.tar"
             IMAGE_NAME="ruixing-taxpro-site:latest"
-            CONTAINER_NAME="rui_xing"
-            HOST_PORT="${{ inputs.host_port }}"
+            CONTAINER_NAME="ruixing-taxpro-site"
+            HOST_PORT="3001"
             CONTAINER_PORT="3001"
             ENV_FILE="$APP_DIR/.env"
 
@@ -137,9 +128,11 @@ jobs:
             $SUDO systemctl enable --now docker
             $SUDO docker load -i "$IMAGE_TAR"
 
-            if $SUDO docker ps -a --format '{{.Names}}' | grep -Fxq "$CONTAINER_NAME"; then
-              $SUDO docker rm -f "$CONTAINER_NAME"
-            fi
+            for name in "ruixing-taxpro-site" "rui_xing"; do
+              if $SUDO docker ps -a --format '{{.Names}}' | grep -Fxq "$name"; then
+                $SUDO docker rm -f "$name"
+              fi
+            done
 
             RUN_ARGS="--detach --restart unless-stopped --name $CONTAINER_NAME -p ${HOST_PORT}:${CONTAINER_PORT}"
             if [ -f "$ENV_FILE" ]; then
