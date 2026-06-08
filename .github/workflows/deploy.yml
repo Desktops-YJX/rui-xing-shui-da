@@ -52,8 +52,11 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           password: ${{ secrets.SERVER_PASSWORD }}
           port: ${{ secrets.SERVER_PORT }}
-          source: "./docker-image/ruixing-taxpro-site.tar"
+          source: "docker-image/ruixing-taxpro-site.tar"
           target: "${{ secrets.DEPLOY_PATH }}/artifacts"
+          strip_components: 1
+          use_insecure_cipher: true
+          timeout: "5m"
 
       - name: Create .env File
         if: ${{ env.APP_ENV_FILE != '' }}
