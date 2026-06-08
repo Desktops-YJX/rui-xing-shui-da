@@ -12,6 +12,7 @@ export const MAIN_NAV = [
   { title: "关于我们", href: "/about" },
   { title: "服务中心", href: "/services" },
   { title: "案例中心", href: "/cases" },
+  { title: "招聘岗位", href: "/careers" },
   { title: "FAQ", href: "/faq" },
   { title: "联系我们", href: "/contact" },
 ];

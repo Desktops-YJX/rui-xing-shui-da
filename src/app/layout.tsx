@@ -29,6 +29,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const shouldLoadAnalytics = process.env.NODE_ENV === "production";
+
   return (
     <html lang="zh-CN" suppressHydrationWarning>
       <body className="min-h-screen bg-background font-sans antialiased flex flex-col text-brand-dark">
@@ -39,7 +41,7 @@ export default function RootLayout({
         </div>
         <SiteFooter />
       </body>
-      <GoogleAnalytics gaId="G-0N9S80E6FF" />
+      {shouldLoadAnalytics ? <GoogleAnalytics gaId="G-0N9S80E6FF" /> : null}
     </html>
   );
 }
