@@ -57,7 +57,7 @@ jobs:
         env:
           SSHPASS: ${{ secrets.SERVER_PASSWORD }}
         run: |
-          sshpass -e rsync -v --progress -e "ssh -o StrictHostKeyChecking=no -o BatchMode=yes -o ServerAliveInterval=15 -p ${{ secrets.SERVER_PORT }}" docker-image/ruixing-taxpro-site.tar.gz ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:${{ secrets.DEPLOY_PATH }}/artifacts/
+          sshpass -e rsync -v --progress -e "ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=15 -p ${{ secrets.SERVER_PORT }}" docker-image/ruixing-taxpro-site.tar.gz ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:${{ secrets.DEPLOY_PATH }}/artifacts/
 
       - name: Create .env File
         if: ${{ env.APP_ENV_FILE != '' }}
@@ -71,7 +71,7 @@ jobs:
         env:
           SSHPASS: ${{ secrets.SERVER_PASSWORD }}
         run: |
-          sshpass -e scp -o StrictHostKeyChecking=no -o BatchMode=yes -P ${{ secrets.SERVER_PORT }} .deploy.env ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:${{ secrets.DEPLOY_PATH }}/.env
+          sshpass -e scp -o StrictHostKeyChecking=no -P ${{ secrets.SERVER_PORT }} .deploy.env ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:${{ secrets.DEPLOY_PATH }}/.env
 
       - name: Load Image and Restart Container
         uses: appleboy/ssh-action@v1.0.3
