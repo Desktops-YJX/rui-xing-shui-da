@@ -27,11 +27,11 @@ jobs:
       - name: Export Docker Image Artifact
         run: |
           mkdir -p dist
-          docker save ruixing-taxpro-site:latest -o dist/ruixing-taxpro-site.tar
+          docker save ruixing-taxpro-site:latest | gzip > dist/ruixing-taxpro-site.tar.gz
 
       - name: Upload Docker Image Artifact
         uses: actions/upload-artifact@v4
         with:
           name: docker-image
-          path: dist/ruixing-taxpro-site.tar
+          path: dist/ruixing-taxpro-site.tar.gz
           retention-days: 7
